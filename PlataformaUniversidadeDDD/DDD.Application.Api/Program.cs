@@ -1,4 +1,3 @@
-using DDD.Infra.MemoryDb;
 using DDD.Infra.SqlServer;
 using DDD.Infra.SqlServer.Interfaces;
 using DDD.Infra.SqlServer.Repositories;
@@ -10,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 //IOC - Dependency Injection
 //builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
 builder.Services.AddScoped<IAlunoRepository, AlunoRepositorySqlServer>();
-builder.Services.AddScoped<SqlContext, SqlContext>();
+builder.Services.AddScoped<IDisciplinaRepository, DisciplinaRepositorySqlServer>();
+builder.Services.AddScoped<IProfessorRepository, ProfessorRepositorySqlServer>();
+builder.Services.AddScoped<SqlServerContext, SqlServerContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

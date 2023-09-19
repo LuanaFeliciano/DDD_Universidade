@@ -11,6 +11,7 @@ namespace DDD.Application.Api.Controllers
     {
         readonly IAlunoRepository _alunoRepository;
 
+        //Dependency Injection
         public AlunoController(IAlunoRepository alunoRepository)
         {
             _alunoRepository = alunoRepository;

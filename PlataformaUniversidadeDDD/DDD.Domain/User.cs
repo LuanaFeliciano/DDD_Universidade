@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace DDD.Domain
 {
-    public class Aluno : User
+    public class User
     {
-        public int Id { get; set; }
-        public DateTime DataCadastro { get; set; }
+        [Required]
+        public string Nome { get; set; }
 
-        public bool Ativo { get; set; }
+        [Required]
+        public string Sobrenome { get; set; }
 
-        public IList<Matricula> Matriculas { get; set; }
+        public string Email { get; set; } 
 
     }
 }

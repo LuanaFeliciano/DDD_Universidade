@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace DDD.Infra.SqlServer.Repositories
 {
-    public class AlunoRepositorySqlServer : IAlunoRepository
+    public class DisciplinaRepositorySqlServer : IDisciplinaRepository
     {
 
         private readonly SqlServerContext _context;
 
-        public AlunoRepositorySqlServer(SqlServerContext context)
+        public DisciplinaRepositorySqlServer(SqlServerContext context)
         {
             _context = context;
         }
 
-        public void DeleteAluno(Aluno aluno)
+        public void DeleteDisciplina(Disciplina disciplina)
         {
             try
             {
-                _context.Set<Aluno>().Remove(aluno);
+                _context.Set<Disciplina>().Remove(disciplina);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -33,24 +33,24 @@ namespace DDD.Infra.SqlServer.Repositories
             }
         }
 
-        public Aluno GetAlunoById(int id)
+        public Disciplina GetDisciplinaById(int id)
         {
-            return _context.Alunos.Find(id);
+            return _context.Disciplinas.Find(id);
         }
 
-        public List<Aluno> GetAlunos()
+        public List<Disciplina> GetDisciplinas()
         {
 
-            var list = _context.Alunos.Include(x => x.Matriculas).ToList();
+            var list = _context.Disciplinas.ToList();
             return list;
 
         }
 
-        public void InsertAluno(Aluno aluno)
+        public void InsertDisciplina(Disciplina disciplina)
         {
             try
             {
-                _context.Alunos.Add(aluno);
+                _context.Disciplinas.Add(disciplina);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -60,11 +60,11 @@ namespace DDD.Infra.SqlServer.Repositories
             }
         }
 
-        public void UpdateAluno(Aluno aluno)
+        public void UpdateDisciplina(Disciplina disciplina)
         {
             try
             {
-                _context.Entry(aluno).State = EntityState.Modified;
+                _context.Entry(disciplina).State = EntityState.Modified;
                 _context.SaveChanges();
 
             }

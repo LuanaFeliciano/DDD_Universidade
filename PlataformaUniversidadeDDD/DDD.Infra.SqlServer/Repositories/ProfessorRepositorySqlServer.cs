@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace DDD.Infra.SqlServer.Repositories
 {
-    public class AlunoRepositorySqlServer : IAlunoRepository
+    public class ProfessorRepositorySqlServer : IProfessorRepository
     {
 
         private readonly SqlServerContext _context;
 
-        public AlunoRepositorySqlServer(SqlServerContext context)
+        public ProfessorRepositorySqlServer(SqlServerContext context)
         {
             _context = context;
         }
 
-        public void DeleteAluno(Aluno aluno)
+        public void DeleteProfessor(Professor professor)
         {
             try
             {
-                _context.Set<Aluno>().Remove(aluno);
+                _context.Set<Professor>().Remove(professor);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -33,24 +33,24 @@ namespace DDD.Infra.SqlServer.Repositories
             }
         }
 
-        public Aluno GetAlunoById(int id)
+        public Professor GetProfessorById(int id)
         {
-            return _context.Alunos.Find(id);
+            return _context.Professores.Find(id);
         }
 
-        public List<Aluno> GetAlunos()
+        public List<Professor> GetProfessores()
         {
 
-            var list = _context.Alunos.Include(x => x.Matriculas).ToList();
+            var list = _context.Professores.Include(x => x.Disciplinas).ToList();
             return list;
 
         }
 
-        public void InsertAluno(Aluno aluno)
+        public void InsertProfessor(Professor professor)
         {
             try
             {
-                _context.Alunos.Add(aluno);
+                _context.Professores.Add(professor);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -60,11 +60,11 @@ namespace DDD.Infra.SqlServer.Repositories
             }
         }
 
-        public void UpdateAluno(Aluno aluno)
+        public void UpdateProfessor(Professor professor)
         {
             try
             {
-                _context.Entry(aluno).State = EntityState.Modified;
+                _context.Entry(professor).State = EntityState.Modified;
                 _context.SaveChanges();
 
             }

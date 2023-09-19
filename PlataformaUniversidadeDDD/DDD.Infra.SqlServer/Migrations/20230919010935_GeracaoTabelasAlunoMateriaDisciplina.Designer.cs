@@ -4,16 +4,19 @@ using DDD.Infra.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace DDD.Infra.SqlServer.Migrations
 {
-    [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SqlServerContext))]
+    [Migration("20230919010935_GeracaoTabelasAlunoMateriaDisciplina")]
+    partial class GeracaoTabelasAlunoMateriaDisciplina
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +32,16 @@ namespace DDD.Infra.SqlServer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -51,9 +64,6 @@ namespace DDD.Infra.SqlServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DisciplinaId"));
 
-                    b.Property<int?>("AlunoId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Disponivel")
                         .HasColumnType("bit");
 
@@ -69,21 +79,60 @@ namespace DDD.Infra.SqlServer.Migrations
 
                     b.HasKey("DisciplinaId");
 
-                    b.HasIndex("AlunoId");
-
                     b.ToTable("Disciplinas");
                 });
 
-            modelBuilder.Entity("DDD.Domain.Disciplina", b =>
+            modelBuilder.Entity("DDD.Domain.Matricula", b =>
                 {
-                    b.HasOne("DDD.Domain.Aluno", null)
-                        .WithMany("Disciplinas")
-                        .HasForeignKey("AlunoId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AlunoId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Ativa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataMatricula")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisciplinaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlunoId");
+
+                    b.HasIndex("DisciplinaId");
+
+                    b.ToTable("Matriculas");
+                });
+
+            modelBuilder.Entity("DDD.Domain.Matricula", b =>
+                {
+                    b.HasOne("DDD.Domain.Aluno", "Aluno")
+                        .WithMany("Matriculas")
+                        .HasForeignKey("AlunoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDD.Domain.Disciplina", "Disciplina")
+                        .WithMany()
+                        .HasForeignKey("DisciplinaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Aluno");
+
+                    b.Navigation("Disciplina");
                 });
 
             modelBuilder.Entity("DDD.Domain.Aluno", b =>
                 {
-                    b.Navigation("Disciplinas");
+                    b.Navigation("Matriculas");
                 });
 #pragma warning restore 612, 618
         }

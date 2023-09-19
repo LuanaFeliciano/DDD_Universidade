@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DDD.Infra.SqlServer
 {
-    public class SqlContext : DbContext
+    public class SqlServerContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -12,5 +12,8 @@ namespace DDD.Infra.SqlServer
 
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
+
+        public DbSet<Matricula> Matriculas { get; set; }
+        public DbSet<Professor> Professores { get; set; }
     }
 }
