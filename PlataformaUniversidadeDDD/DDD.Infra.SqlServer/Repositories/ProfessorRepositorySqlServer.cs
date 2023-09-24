@@ -1,4 +1,4 @@
-using DDD.Domain;
+using DDD.Domain.SecretariaContext;
 using DDD.Infra.SqlServer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

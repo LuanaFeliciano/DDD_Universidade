@@ -1,4 +1,4 @@
-using DDD.Domain;
+using DDD.Domain.SecretariaContext;
 using DDD.Infra.SqlServer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +40,7 @@ namespace DDD.Application.Api.Controllers
                 return BadRequest("Nome deve ser maior que 3 e menor que 30 caracteres.");
             }
             _professorRepository.InsertProfessor(professor);
-            return CreatedAtAction(nameof(GetById), new { id = professor.Id }, professor);
+            return CreatedAtAction(nameof(GetById), new { id = professor.UserId }, professor);
         }
 
         [HttpPut]

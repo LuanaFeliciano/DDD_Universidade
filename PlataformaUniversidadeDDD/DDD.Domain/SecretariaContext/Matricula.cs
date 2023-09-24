@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDD.Domain
+namespace DDD.Domain.SecretariaContext
 {
     public class Matricula
     {
-        public int Id { get; set; }
+        public int MatriculaId { get; set; }
 
         public int AlunoId { get; set; } // Chave estrangeira para o aluno
         public Aluno Aluno { get; set; } // Propriedade de navegação para o aluno
